@@ -1,6 +1,20 @@
+from transformers import pipeline
 import gradio as gr
 
+generator = pipeline(
+    "text-generation",
+    model="distilgpt2"
+)
 def generate_video(prompt):
+
+    result = generator(
+        prompt,
+        max_length=80,
+        num_return_sequences=1
+    )
+
+    ai_story = result[0]["generated_text"]
+
     return f"""
 🎬 Video Generation Started
 
@@ -8,7 +22,7 @@ def generate_video(prompt):
 {prompt}
 
 📖 AI Script:
-In a futuristic world, {prompt.lower()} becomes the center of an unforgettable adventure.
+{ai_story}
 
 🎥 Scene 1:
 Introduction to the story.
